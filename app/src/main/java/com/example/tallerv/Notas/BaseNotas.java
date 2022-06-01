@@ -43,4 +43,37 @@ public class BaseNotas extends BaseHelper {
         return id;
     }
 
+    //----Ale TODO:
+
+    public ArrayList<CrearNotasE> mostrarNotas(){
+        BaseHelper baseHelper = new BaseHelper(context);
+        SQLiteDatabase db = baseHelper.getWritableDatabase();
+
+        ArrayList<CrearNotasE> listaNotas = new ArrayList<>();
+
+        CrearNotasE crearNotasE = null;
+        Cursor cursorNotas =null;
+
+        cursorNotas = db.rawQuery("SELECT * FROM " + TABLE_NOTAS, null);
+
+        if(cursorNotas.moveToFirst()){
+
+            do{
+                crearNotasE = new CrearNotasE();
+
+                crearNotasE.setId(cursorNotas.getInt(0));
+                crearNotasE.setTituloNotaTxt(cursorNotas.getString(1));
+                crearNotasE.setLocalizacionNotaTxt(cursorNotas.getString(2));
+                crearNotasE.setDescripcionNotaTxt(cursorNotas.getString(3));
+                listaNotas.add(crearNotasE);
+
+            }while(cursorNotas.moveToNext());
+
+
+        }
+        cursorNotas.close();
+        return listaNotas;
+    }
+    //---
+
 }
