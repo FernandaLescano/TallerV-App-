@@ -1,7 +1,5 @@
 package com.example.tallerv;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -11,11 +9,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.tallerv.Notas.CrearNotas;
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.tallerv.Notas.Notas;
 
 public class MainActivity extends AppCompatActivity {
 
-    Button btnIngresar, btnCancelar, btnCompartir;
+    Button btnIngresar;
+    TextView compartir;
     TextView registrarse;
     BaseHelper db;
     EditText Email, Contrasena;
@@ -27,13 +28,12 @@ public class MainActivity extends AppCompatActivity {
         db = new BaseHelper(this);
 
        btnIngresar = (Button) findViewById(R.id.btnIngresar);
-       btnCancelar = (Button) findViewById(R.id.btnCancelar);
        registrarse = (TextView) findViewById(R.id.registrarse);
        Email = (EditText) findViewById(R.id.email);
        Contrasena = (EditText) findViewById(R.id.contrasena);
-       btnCompartir = (Button) findViewById(R.id.btnCompartir);
+       compartir = (TextView) findViewById(R.id.compartir);
 
-       //NOS LOGUEAMOS Y NOS LLEVA A LA SIGUIENTE PANTALLA
+       //NOS LOGUEAMOS Y NOS LLEVA A LA SIGUIENTE PANTALLA DE NOTAS
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(validarEmailContrasena == true){
                     Toast.makeText(getApplicationContext(),"Usuario Correcto", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(MainActivity.this, CrearNotas.class);
+                    Intent i = new Intent(MainActivity.this, Notas.class);
                     startActivity(i);
                 }
                 else{
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //BOTON PARA COMPARTIR
-        btnCompartir.setOnClickListener(new View.OnClickListener() {
+        compartir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent myIntent = new Intent (Intent.ACTION_SEND);
@@ -72,17 +72,6 @@ public class MainActivity extends AppCompatActivity {
                 myIntent.putExtra(Intent.EXTRA_SUBJECT, shareSub);
                 myIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(myIntent,"Taller V App"));
-            }
-        });
-
-        //BOTON PARA CANCELAR
-        btnCancelar = (Button) findViewById(R.id.btnCancelar);
-
-        Button btnCancelar = (Button) findViewById(R.id.btnCancelar);
-        btnCancelar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
             }
         });
 
@@ -102,5 +91,4 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
 }

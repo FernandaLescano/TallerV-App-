@@ -43,7 +43,7 @@ public class BaseNotas extends BaseHelper {
         return id;
     }
 
-    //----Ale TODO:
+    //----
 
     public ArrayList<CrearNotasE> mostrarNotas(){
         BaseHelper baseHelper = new BaseHelper(context);

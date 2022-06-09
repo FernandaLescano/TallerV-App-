@@ -1,11 +1,9 @@
 package com.example.tallerv;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.EditText;
 
 import androidx.annotation.Nullable;
 
@@ -51,6 +49,15 @@ public class BaseHelper extends SQLiteOpenHelper {
     public boolean validarEmailContra(String email, String contrasena){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(" Select * from " + TABLE_USUARIOS + " where email=? and contrasena=? ", new String[]{email,contrasena});
+        if(cursor.getCount()>0)
+            return true;
+        else
+            return false;
+    }
+
+    public boolean validarEmail(String email){
+        SQLiteDatabase db =this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(" Select * from " + TABLE_USUARIOS + " where email=? ", new String[]{email});
         if(cursor.getCount()>0)
             return true;
         else

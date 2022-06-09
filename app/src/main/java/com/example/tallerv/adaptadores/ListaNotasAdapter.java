@@ -25,7 +25,7 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
     @NonNull
     @Override
 
-    //diseño de cada elemento de la lista
+    //CREAMOS CADA ELEMENTO DE LA LISTA
     public NotaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.lista_item_nota, null, false);
         return new NotaViewHolder(view);
@@ -64,7 +64,7 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
             viewDescripcionNota = itemView.findViewById(R.id.viewDescripcionNota);
 
 
-            //ABRE LA VENTANA DE MODIFICAR
+            //MODIFICAR TODO:
 
 
           /*  itemView.setOnClickListener(new View.OnClickListener() {
@@ -72,9 +72,9 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
                 public void onClick(View v) {
 
                     Context context = v.getContext();
-                    Intent intent = new Intent(context, DetalleCliente.class);
+                    Intent intent = new Intent(context, DetalleNotas.class);
 
-                    intent.putExtra("ID",listadoClientes.get(getAdapterPosition()).getId());
+                    intent.putExtra("ID",listadoNotas.get(getAdapterPosition()).getId());
                     context.startActivity(intent);
                 }
             }); */

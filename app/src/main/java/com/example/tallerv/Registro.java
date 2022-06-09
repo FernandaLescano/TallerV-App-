@@ -19,14 +19,18 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tallerv.Notas.Notas;
 import com.example.tallerv.Usuarios.BaseUsuarios;
 
 public class Registro extends AppCompatActivity {
 
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
     private static final int CAMERA_REQUEST = 1000;
-    Button cancelabtn, registrabtn, abrirCamaraBtn;
-    EditText email, contrasena, usuario, repcontrasena;
+    Button cancelabtn, registrabtn;
+    EditText email;
+    EditText contrasena;
+    EditText usuario;
+    EditText repcontrasena;
     ImageView imagenRegistro;
 
     @Override
@@ -36,7 +40,6 @@ public class Registro extends AppCompatActivity {
 
         BaseHelper db = new BaseHelper(this);
 
-        abrirCamaraBtn = (Button) findViewById(R.id.abrirCamaraBtn);
         imagenRegistro = (ImageView) findViewById(R.id.imagenRegistro);
 
         cancelabtn = (Button) findViewById(R.id.cancelabtn);
@@ -64,12 +67,17 @@ public class Registro extends AppCompatActivity {
 
                 if(!usuario.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !contrasena.getText().toString().isEmpty() && !repcontrasena.getText().toString().isEmpty()){
                     Toast.makeText(Registro.this, "Usuario Guardado", Toast.LENGTH_SHORT).show();
+                    limpiar();
+                    Intent i = new Intent(Registro.this, Notas.class);
+                    startActivity(i);
                 }
                else{
                     Toast.makeText(Registro.this,"Error, falta completar campos", Toast.LENGTH_SHORT).show();
+                    limpiar();
                 }
             }
         });
+
 
         if(getSupportActionBar()!=null) {
 
@@ -77,7 +85,7 @@ public class Registro extends AppCompatActivity {
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
 
-        abrirCamaraBtn.setOnClickListener(new View.OnClickListener() {
+        imagenRegistro.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
@@ -96,15 +104,13 @@ public class Registro extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /* LIMPIAR REGISTRO UNA VEZ GUARDADO
+    //LIMPIAR REGISTRO
     private void limpiar (){
-
-        etNombreClientes.setText("");
-        etCuitClientes.setText("");
-        etDireccionClientes.setText("");
-        etTelefonoClientes.setText("");
-
-    }*/
+        usuario.setText("");
+        email.setText("");
+        contrasena.setText("");
+        repcontrasena.setText("");
+    }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void abrirCamara(){
