@@ -63,21 +63,90 @@ public class Registro extends AppCompatActivity {
             public void onClick(View view) {
                 BaseUsuarios baseUsuarios = new BaseUsuarios(Registro.this);
 
-                long id = baseUsuarios.insertarUsuario(usuario.getText().toString(),email.getText().toString(),contrasena.getText().toString(), repcontrasena.getText().toString());
+                String emailReg = email.getText().toString();
 
-                if(!usuario.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !contrasena.getText().toString().isEmpty() && !repcontrasena.getText().toString().isEmpty()){
-                    Toast.makeText(Registro.this, "Usuario Guardado", Toast.LENGTH_SHORT).show();
-                    limpiar();
-                    Intent i = new Intent(Registro.this, Notas.class);
-                    startActivity(i);
+               /*      if (!usuario.getText().toString().isEmpty() && !email.getText().toString().isEmpty() && !contrasena.getText().toString().isEmpty() && !repcontrasena.getText().toString().isEmpty()) {
+                        Toast.makeText(Registro.this, "Usuario Guardado", Toast.LENGTH_SHORT).show();
+                        limpiar();
+
+                    } else {
+                        Toast.makeText(Registro.this, "Error, falta completar campos", Toast.LENGTH_SHORT).show();
+                        limpiar();
+                    }*/
+                /*Boolean validarEmail = db.validarEmail(emailReg);
+                if(validarEmail==true){
+                    Toast.makeText(getApplicationContext(),"ya existe un usuario",Toast.LENGTH_SHORT).show();
+                }*/
+
+                /*Boolean validarEmail = db.validarEmail(emailReg);
+                if(validarEmail==true){
+                    Toast.makeText(getApplicationContext(),"ya existe un usuario",Toast.LENGTH_SHORT).show();
                 }
-               else{
+                else {
+                    if(usuario.equals("")||email.equals("")||contrasena.equals("")||repcontrasena.equals("")){
+                        Toast.makeText(Registro.this,"Error, falta completar campos",Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        if(contrasena.equals(repcontrasena)){
+                            long id = baseUsuarios.insertarUsuario(usuario.getText().toString(),email.getText().toString(),contrasena.getText().toString(), repcontrasena.getText().toString());
+
+                            Toast.makeText(Registro.this, "Usuario Guardado", Toast.LENGTH_SHORT).show();
+                            limpiar();
+                            Intent i = new Intent(Registro.this, Notas.class);
+                            startActivity(i);
+                        }
+                        else{
+                            Toast.makeText(Registro.this,"El mail ya existe",Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }*/
+
+                /*
+                if(usuario.equals("")||email.equals("")||contrasena.equals("")||repcontrasena.equals("")){
                     Toast.makeText(Registro.this,"Error, falta completar campos", Toast.LENGTH_SHORT).show();
-                    limpiar();
                 }
-            }
-        });
+                else{
+                     if(contrasena.equals(repcontrasena)) {
 
+                    }else
+                    {
+                        Toast.makeText(Registro.this,"Las contraseñas no coinciden",Toast.LENGTH_SHORT).show();
+                    }
+                  */
+
+
+
+             //---
+                if(usuario.getText().toString().isEmpty() || email.getText().toString().isEmpty() ||contrasena.getText().toString().isEmpty() ||repcontrasena.getText().toString().isEmpty() ){
+                    Toast.makeText(Registro.this,"Error, falta completar campos", Toast.LENGTH_SHORT).show();
+                }else {
+                    //-- VALIDAR EMAL QUE NO SE REPITA
+                    boolean validarEmail = db.validarEmail(emailReg);
+                    if ( validarEmail == false) {
+                       //-
+                        if(repcontrasena.getText().toString().equals(contrasena.getText().toString())) {
+                            long id = baseUsuarios.insertarUsuario(usuario.getText().toString(), email.getText().toString(), contrasena.getText().toString(), repcontrasena.getText().toString());
+                            Toast.makeText(Registro.this, "Usuario Guardado", Toast.LENGTH_SHORT).show();
+                            //limpiar();
+                            Intent i = new Intent(Registro.this, Notas.class);
+                            startActivity(i);
+                        }else{
+                            Toast.makeText(Registro.this,"Las contraseñas no coinciden",Toast.LENGTH_SHORT).show();
+
+                        }
+
+                        //-
+                    } else {
+
+                        Toast.makeText(Registro.this, "El email ya existe", Toast.LENGTH_SHORT).show();
+
+                    }
+                    //--
+                }//---
+
+                }
+
+        });
 
         if(getSupportActionBar()!=null) {
 

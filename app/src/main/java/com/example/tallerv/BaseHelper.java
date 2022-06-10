@@ -55,9 +55,9 @@ public class BaseHelper extends SQLiteOpenHelper {
             return false;
     }
 
-    public boolean validarEmail(String email){
-        SQLiteDatabase db =this.getWritableDatabase();
-        Cursor cursor = db.rawQuery(" Select * from " + TABLE_USUARIOS + " where email=? ", new String[]{email});
+    public boolean validarEmail(String emailReg){
+        SQLiteDatabase db =this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(" Select * from " + TABLE_USUARIOS +" where email=? ", new String[]{emailReg});
         if(cursor.getCount()>0)
             return true;
         else

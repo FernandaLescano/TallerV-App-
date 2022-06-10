@@ -66,16 +66,6 @@
         app:layout_constraintTop_toBottomOf="@+id/descripcionNotaTxt"
         />
 
-    <Button
-        android:id="@+id/verNotasBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Ver Notas"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/crearNotasBtn"
-        />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
