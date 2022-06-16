@@ -1,4 +1,4 @@
-package com.example.tallerv;
+package com.example.tallerv.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,9 +10,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.tallerv.Notas.Notas;
+import com.example.tallerv.activities.Notas.ListadoNotasActivity;
+import com.example.tallerv.R;
+import com.example.tallerv.repository.BaseHelper;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     Button btnIngresar;
     TextView compartir;
@@ -32,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
        Contrasena = (EditText) findViewById(R.id.contrasena);
        compartir = (TextView) findViewById(R.id.compartir);
 
+
        //NOS LOGUEAMOS Y NOS LLEVA A LA SIGUIENTE PANTALLA DE NOTAS
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -42,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if(validarEmailContrasena == true){
                     Toast.makeText(getApplicationContext(),"Usuario Correcto", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(MainActivity.this, Notas.class);
+
+                    Intent i = new Intent(LoginActivity.this, ListadoNotasActivity.class);
                     startActivity(i);
                 }
                 else{
@@ -55,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         registrarse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(MainActivity.this, Registro.class);
+                Intent i = new Intent(LoginActivity.this, RegistroActivity.class);
                 startActivity(i);
             }
         });

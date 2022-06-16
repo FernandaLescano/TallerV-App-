@@ -1,6 +1,6 @@
 package com.example.tallerv.Entidades;
 
-public class Usuarios {
+public class Usuario {
 
     private int id;
     private String usuario;

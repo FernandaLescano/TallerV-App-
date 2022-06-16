@@ -1,6 +1,6 @@
 package com.example.tallerv.Entidades;
 
-public class CrearNotasE {
+public class Nota {
 
     private int id;
     private String tituloNotaTxt, localizacionNotaTxt, descripcionNotaTxt, fechaNotaTxt;

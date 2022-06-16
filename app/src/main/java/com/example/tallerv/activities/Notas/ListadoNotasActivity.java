@@ -1,4 +1,4 @@
-package com.example.tallerv.Notas;
+package com.example.tallerv.activities.Notas;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,14 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tallerv.R;
 import com.example.tallerv.adaptadores.ListaNotasAdapter;
+import com.example.tallerv.repository.NotasRepository;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 
-public class Notas extends AppCompatActivity {
+public class ListadoNotasActivity extends AppCompatActivity {
 
     RecyclerView listadoNotas;
-    ArrayList<Notas> listadoArrayNotas;
+    ArrayList<ListadoNotasActivity> listadoArrayNotas;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class Notas extends AppCompatActivity {
         listadoNotas = findViewById(R.id.listadoNotas);
         listadoNotas.setLayoutManager(new LinearLayoutManager(this));
 
-        BaseNotas baseNotas = new BaseNotas ( Notas.this);
+        NotasRepository baseNotas = new NotasRepository( ListadoNotasActivity.this);
 
         listadoArrayNotas = new ArrayList<>();
 
@@ -42,7 +43,7 @@ public class Notas extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Notas.this, CrearNotas.class));
+                startActivity(new Intent(ListadoNotasActivity.this, NuevaNotaActivity.class));
             }
         });
 

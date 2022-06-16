@@ -16,19 +16,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TallerV">
         <activity
-            android:name=".Notas.NotaCreada"
+            android:name=".activities.Notas.NotaCreadaActivity"
             android:exported="false" />
         <activity
-            android:name=".Notas.Notas"
+            android:name=".activities.Notas.ListadoNotasActivity"
             android:exported="false" />
         <activity
-            android:name=".Notas.CrearNotas"
+            android:name=".activities.Notas.NuevaNotaActivity"
             android:exported="false" />
         <activity
-            android:name=".Registro"
+            android:name=".activities.RegistroActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

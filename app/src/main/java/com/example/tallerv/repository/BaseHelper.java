@@ -1,7 +1,6 @@
-package com.example.tallerv;
+package com.example.tallerv.repository;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -34,7 +33,8 @@ public class BaseHelper extends SQLiteOpenHelper {
                 "tituloNotaTxt TEXT NOT NULL," +
                 "localizacionNotaTxt TEXT NOT NULL," +
                 "descripcionNotaTxt TEXT NOT NULL,"+
-                "fechaNotaTxt TEXT NOT NULL"+")"
+                "fechaNotaTxt TEXT NOT NULL,"+
+                "FOREIGN KEY (id) REFERENCES TABLE_USUARIOS(id)  "+")"
         );
 
     }
@@ -47,21 +47,5 @@ public class BaseHelper extends SQLiteOpenHelper {
             onCreate(db);
         }
 
-    public boolean validarEmailContra(String email, String contrasena){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(" Select * from " + TABLE_USUARIOS + " where email=? and contrasena=? ", new String[]{email,contrasena});
-        if(cursor.getCount()>0)
-            return true;
-        else
-            return false;
-    }
-
-    public boolean validarEmail(String emailReg){
-        SQLiteDatabase db =this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(" Select * from " + TABLE_USUARIOS +" where email=? ", new String[]{emailReg});
-        if(cursor.getCount()>0)
-            return true;
-        else
-            return false;
-    }
+    //--
 }

@@ -1,4 +1,4 @@
-package com.example.tallerv;
+package com.example.tallerv.activities;
 
 import android.Manifest;
 import android.app.Activity;
@@ -19,10 +19,12 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.tallerv.Notas.Notas;
-import com.example.tallerv.Usuarios.BaseUsuarios;
+import com.example.tallerv.activities.Notas.ListadoNotasActivity;
+import com.example.tallerv.R;
+import com.example.tallerv.repository.BaseHelper;
+import com.example.tallerv.repository.UsuariosRepository;
 
-public class Registro extends AppCompatActivity {
+public class RegistroActivity extends AppCompatActivity {
 
     private static final int MY_CAMERA_PERMISSION_CODE = 100;
     private static final int CAMERA_REQUEST = 1000;
@@ -61,13 +63,13 @@ public class Registro extends AppCompatActivity {
         registrabtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BaseUsuarios baseUsuarios = new BaseUsuarios(Registro.this);
+                UsuariosRepository baseUsuarios = new UsuariosRepository(RegistroActivity.this);
 
                 String emailReg = email.getText().toString();
 
              //---
                 if(usuario.getText().toString().isEmpty() || email.getText().toString().isEmpty() ||contrasena.getText().toString().isEmpty() ||repcontrasena.getText().toString().isEmpty() ){
-                    Toast.makeText(Registro.this,"Error, falta completar campos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistroActivity.this,"Error, falta completar campos", Toast.LENGTH_SHORT).show();
                 }else {
                     //-- VALIDAR EMAL QUE NO SE REPITA
                     boolean validarEmail = db.validarEmail(emailReg);
@@ -75,19 +77,19 @@ public class Registro extends AppCompatActivity {
                        //-
                         if(repcontrasena.getText().toString().equals(contrasena.getText().toString())) {
                             long id = baseUsuarios.insertarUsuario(usuario.getText().toString(), email.getText().toString(), contrasena.getText().toString(), repcontrasena.getText().toString());
-                            Toast.makeText(Registro.this, "Usuario Guardado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistroActivity.this, "Usuario Guardado", Toast.LENGTH_SHORT).show();
                             //limpiar();
-                            Intent i = new Intent(Registro.this, Notas.class);
+                            Intent i = new Intent(RegistroActivity.this, ListadoNotasActivity.class);
                             startActivity(i);
                         }else{
-                            Toast.makeText(Registro.this,"Las contraseñas no coinciden",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegistroActivity.this,"Las contraseñas no coinciden",Toast.LENGTH_SHORT).show();
 
                         }
 
                         //-
                     } else {
 
-                        Toast.makeText(Registro.this, "El email ya existe", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegistroActivity.this, "El email ya existe", Toast.LENGTH_SHORT).show();
 
                     }
                     //--

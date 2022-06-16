@@ -1,4 +1,4 @@
-package com.example.tallerv.Notas;
+package com.example.tallerv.repository;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -7,17 +7,16 @@ import android.database.sqlite.SQLiteDatabase;
 
 import androidx.annotation.Nullable;
 
-import com.example.tallerv.BaseHelper;
-import com.example.tallerv.Entidades.CrearNotasE;
+import com.example.tallerv.Entidades.Nota;
 
 import java.util.ArrayList;
 
-public class BaseNotas extends BaseHelper {
+public class NotasRepository extends BaseHelper {
 
     private static final String TABLE_NOTAS = "t_notas";
     Context context;
 
-    public BaseNotas(@Nullable Context context){
+    public NotasRepository(@Nullable Context context){
         super(context);
         this.context = context;
     }
@@ -46,13 +45,13 @@ public class BaseNotas extends BaseHelper {
 
     //----
 
-    public ArrayList<CrearNotasE> mostrarNotas(){
+    public ArrayList<Nota> mostrarNotas(){
         BaseHelper baseHelper = new BaseHelper(context);
         SQLiteDatabase db = baseHelper.getWritableDatabase();
 
-        ArrayList<CrearNotasE> listaNotas = new ArrayList<>();
+        ArrayList<Nota> listaNotas = new ArrayList<>();
 
-        CrearNotasE crearNotasE = null;
+        Nota crearNotasE = null;
         Cursor cursorNotas =null;
 
         cursorNotas = db.rawQuery("SELECT * FROM " + TABLE_NOTAS, null);
@@ -60,7 +59,7 @@ public class BaseNotas extends BaseHelper {
         if(cursorNotas.moveToFirst()){
 
             do{
-                crearNotasE = new CrearNotasE();
+                crearNotasE = new Nota();
 
                 crearNotasE.setId(cursorNotas.getInt(0));
                 crearNotasE.setTituloNotaTxt(cursorNotas.getString(1));

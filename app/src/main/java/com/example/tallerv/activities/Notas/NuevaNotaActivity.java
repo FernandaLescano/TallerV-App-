@@ -1,4 +1,4 @@
-package com.example.tallerv.Notas;
+package com.example.tallerv.activities.Notas;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
@@ -15,14 +15,15 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.tallerv.R;
+import com.example.tallerv.repository.NotasRepository;
 
 import java.util.Calendar;
 
-public class CrearNotas extends AppCompatActivity {
+public class NuevaNotaActivity extends AppCompatActivity {
 
     Button agregarNota;
-    EditText tituloNotaTxt, localizacionNotaTxt, descripcionNotaTxt;
-    EditText fechaNotaTxt;
+    static EditText tituloNotaTxt, localizacionNotaTxt, descripcionNotaTxt;
+    static EditText fechaNotaTxt;
 
     Calendar c;
     DatePickerDialog dpd;
@@ -42,42 +43,20 @@ public class CrearNotas extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                BaseNotas baseNotas = new BaseNotas(CrearNotas.this);
+                NotasRepository baseNotas = new NotasRepository(NuevaNotaActivity.this);
 
                 if(!tituloNotaTxt.getText().toString().isEmpty() && !localizacionNotaTxt.getText().toString().isEmpty() && !descripcionNotaTxt.getText().toString().isEmpty() ){
                 long id = baseNotas.insertarNotas(tituloNotaTxt.getText().toString(), localizacionNotaTxt.getText().toString(), descripcionNotaTxt.getText().toString(), fechaNotaTxt.getText().toString());
-                    Toast.makeText(CrearNotas.this, "Nota guardada", Toast.LENGTH_SHORT).show();
-                    Intent i = new Intent(CrearNotas.this, Notas.class);
+                    Toast.makeText(NuevaNotaActivity.this, "Nota guardada", Toast.LENGTH_SHORT).show();
+                    Intent i = new Intent(NuevaNotaActivity.this, NotaCreadaActivity.class);
                     startActivity(i);
                 }
                 else{
-                    Toast.makeText(CrearNotas.this,"No se guardo la nota", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(NuevaNotaActivity.this,"No se guardo la nota", Toast.LENGTH_SHORT).show();
                 }
-                //ABRIMOS GOOGLE CALENDAR
-                /*if(!tituloNotaTxt.getText().toString().isEmpty() && !localizacionNotaTxt.getText().toString().isEmpty() && !descripcionNotaTxt.getText().toString().isEmpty() ){
-
-                    Intent intent = new Intent(Intent.ACTION_INSERT);
-                    intent.setData(CalendarContract.Events.CONTENT_URI);
-                    intent.putExtra(CalendarContract.Events.TITLE, tituloNotaTxt.getText().toString());
-                    intent.putExtra(CalendarContract.Events.EVENT_LOCATION, localizacionNotaTxt.getText().toString());
-                    intent.putExtra(CalendarContract.Events.DESCRIPTION, descripcionNotaTxt.getText().toString());
-                    intent.putExtra(CalendarContract.Events.ALL_DAY,true);
-                    intent.putExtra(Intent.EXTRA_EMAIL,"");
-
-                    if(intent.resolveActivity(getPackageManager()) != null){
-                        startActivity(intent);
-                    }
-                    else{
-                        Toast.makeText(CrearNotas.this, "ERROR", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                else{
-                    Toast.makeText(CrearNotas.this,"No se guardo la nota", Toast.LENGTH_SHORT).show();
-                }*/
 
                     }
                 });
-
 
         fechaNotaTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,17 +66,15 @@ public class CrearNotas extends AppCompatActivity {
                 int mes = c.get(Calendar.MONTH);
                 int anio = c.get(Calendar.YEAR);
 
-                dpd = new DatePickerDialog(CrearNotas.this, new DatePickerDialog.OnDateSetListener() {
+                dpd = new DatePickerDialog(NuevaNotaActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int dia, int mes, int anio) {
                         fechaNotaTxt.setText(dia + "/" + (mes+1) + "/" + anio);
                     }
-                },dia,mes,anio);
+                },anio,mes,dia);
                 dpd.show();
             }
         });
-
-
 
         //APRETAMOS VER NOTAS Y NOS LLEVA A LA PAGINA DE NOTAS CREADAS
         /*verNotasBtn.setOnClickListener(new View.OnClickListener(){

@@ -8,16 +8,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.tallerv.Entidades.CrearNotasE;
+import com.example.tallerv.Entidades.Nota;
 import com.example.tallerv.R;
 
 import java.util.ArrayList;
 
 public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.NotaViewHolder> {
 
-    ArrayList<CrearNotasE> listadoNotas;
+    ArrayList<Nota> listadoNotas;
 
-    public ListaNotasAdapter(ArrayList<CrearNotasE> listadoNotas){
+    public ListaNotasAdapter(ArrayList<Nota> listadoNotas){
 
         this.listadoNotas = listadoNotas;
     }
