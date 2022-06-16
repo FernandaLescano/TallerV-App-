@@ -3,7 +3,7 @@ package com.example.tallerv.Entidades;
 public class CrearNotasE {
 
     private int id;
-    private String tituloNotaTxt, localizacionNotaTxt, descripcionNotaTxt;
+    private String tituloNotaTxt, localizacionNotaTxt, descripcionNotaTxt, fechaNotaTxt;
 
     public int getId() { return id; }
 
@@ -28,4 +28,12 @@ public class CrearNotasE {
     }
 
     public void setDescripcionNotaTxt(String descripcionNotaTxt) { this.descripcionNotaTxt = descripcionNotaTxt; }
+
+    public String getFechaNotaTxt() {
+        return fechaNotaTxt;
+    }
+
+    public void setFechaNotaTxt(String fechaNotaTxt) {
+        this.fechaNotaTxt = fechaNotaTxt;
+    }
 }

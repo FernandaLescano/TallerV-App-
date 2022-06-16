@@ -33,7 +33,8 @@ public class BaseHelper extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "tituloNotaTxt TEXT NOT NULL," +
                 "localizacionNotaTxt TEXT NOT NULL," +
-                "descripcionNotaTxt TEXT NOT NULL"+")"
+                "descripcionNotaTxt TEXT NOT NULL,"+
+                "fechaNotaTxt TEXT NOT NULL"+")"
         );
 
     }

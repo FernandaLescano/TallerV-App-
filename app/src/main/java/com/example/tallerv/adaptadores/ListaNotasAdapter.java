@@ -37,6 +37,7 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
         holder.viewTituloNota.setText(listadoNotas.get(position).getTituloNotaTxt());
         holder.viewLocalizacionNota.setText(listadoNotas.get(position).getLocalizacionNotaTxt());
         holder.viewDescripcionNota.setText(listadoNotas.get(position).getDescripcionNotaTxt());
+        holder.viewFechaNota.setText(listadoNotas.get(position).getFechaNotaTxt());
 
 
 
@@ -53,6 +54,7 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
         TextView viewTituloNota;
         TextView viewLocalizacionNota;
         TextView viewDescripcionNota;
+        TextView viewFechaNota;
 
 
 
@@ -62,6 +64,7 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
             viewTituloNota = itemView.findViewById(R.id.viewTituloNota);
             viewLocalizacionNota = itemView.findViewById(R.id.viewLocalizacionNota);
             viewDescripcionNota = itemView.findViewById(R.id.viewDescripcionNota);
+            viewFechaNota = itemView.findViewById(R.id.viewFechaNota);
 
 
             //MODIFICAR TODO:

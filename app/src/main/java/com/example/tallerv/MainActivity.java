@@ -2,7 +2,6 @@ package com.example.tallerv;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,7 +16,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button btnIngresar;
     TextView compartir;
-    TextView registrarse;
+    Button registrarse;
     BaseHelper db;
     EditText Email, Contrasena;
 
@@ -28,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         db = new BaseHelper(this);
 
        btnIngresar = (Button) findViewById(R.id.btnIngresar);
-       registrarse = (TextView) findViewById(R.id.registrarse);
+       registrarse = (Button) findViewById(R.id.registrarse);
        Email = (EditText) findViewById(R.id.email);
        Contrasena = (EditText) findViewById(R.id.contrasena);
        compartir = (TextView) findViewById(R.id.compartir);
@@ -52,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //APRETAMOS REGISTRARSE Y NOS LLEVA A LA PAGINA DE REGISTRO
+        //APRETAMOS EL BOTON REGISTRARSE Y NOS LLEVA A LA PAGINA DE REGISTRO
         registrarse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,14 +74,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        if(getSupportActionBar()!=null) {
+        /*if(getSupportActionBar()!=null) {
 
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
+        }*/
     }
 
-    @Override
+    /*@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if(item.getItemId()==android.R.id.home){
 
@@ -90,5 +89,5 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
+    }*/
 }

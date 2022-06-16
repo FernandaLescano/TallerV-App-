@@ -22,7 +22,7 @@ public class BaseNotas extends BaseHelper {
         this.context = context;
     }
 
-    public long insertarNotas(String tituloNotaTxt, String localizacionNotaTxt, String descripcionNotaTxt){
+    public long insertarNotas(String tituloNotaTxt, String localizacionNotaTxt, String descripcionNotaTxt, String fechaNotaTxt){
 
         long id = 0;
         try{
@@ -34,6 +34,7 @@ public class BaseNotas extends BaseHelper {
             values.put("tituloNotaTxt",tituloNotaTxt);
             values.put("localizacionNotaTxt",localizacionNotaTxt);
             values.put("descripcionNotaTxt",descripcionNotaTxt);
+            values.put("fechaNotaTxt",fechaNotaTxt);
 
             id = db.insert( TABLE_NOTAS, null, values);
 
@@ -65,6 +66,7 @@ public class BaseNotas extends BaseHelper {
                 crearNotasE.setTituloNotaTxt(cursorNotas.getString(1));
                 crearNotasE.setLocalizacionNotaTxt(cursorNotas.getString(2));
                 crearNotasE.setDescripcionNotaTxt(cursorNotas.getString(3));
+                crearNotasE.setFechaNotaTxt(cursorNotas.getString(4));
                 listaNotas.add(crearNotasE);
 
             }while(cursorNotas.moveToNext());
