@@ -2,12 +2,12 @@ package com.example.tallerv.Entidades;
 
 public class Nota {
 
-    private int id;
+    private long id, user_id;
     private String tituloNotaTxt, localizacionNotaTxt, descripcionNotaTxt, fechaNotaTxt;
 
-    public int getId() { return id; }
+    public long getId() { return id; }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -35,5 +35,13 @@ public class Nota {
 
     public void setFechaNotaTxt(String fechaNotaTxt) {
         this.fechaNotaTxt = fechaNotaTxt;
+    }
+
+    public long getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(long user_id) {
+        this.user_id = user_id;
     }
 }

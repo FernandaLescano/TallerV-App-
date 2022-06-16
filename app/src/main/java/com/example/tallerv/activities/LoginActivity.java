@@ -1,6 +1,8 @@
 package com.example.tallerv.activities;
 
 import android.content.Intent;
+import android.graphics.Path;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -8,25 +10,30 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tallerv.Entidades.Usuario;
 import com.example.tallerv.activities.Notas.ListadoNotasActivity;
 import com.example.tallerv.R;
 import com.example.tallerv.repository.BaseHelper;
+import com.example.tallerv.repository.UsuariosRepository;
+
+import java.util.Collection;
+import java.util.Optional;
 
 public class LoginActivity extends AppCompatActivity {
 
     Button btnIngresar;
     TextView compartir;
     Button registrarse;
-    BaseHelper db;
+    UsuariosRepository repository = new UsuariosRepository();
     EditText Email, Contrasena;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        db = new BaseHelper(this);
 
        btnIngresar = (Button) findViewById(R.id.btnIngresar);
        registrarse = (Button) findViewById(R.id.registrarse);
@@ -37,19 +44,20 @@ public class LoginActivity extends AppCompatActivity {
 
        //NOS LOGUEAMOS Y NOS LLEVA A LA SIGUIENTE PANTALLA DE NOTAS
         btnIngresar.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
                 String email = Email.getText().toString();
                 String contrasena = Contrasena.getText().toString();
-                Boolean validarEmailContrasena = db.validarEmailContra(email,contrasena);
+                Collection<Usuario> usuarios = repository.buscarUsuario(LoginActivity.this, Optional.of(email), Optional.of(contrasena), Optional.empty());
 
-                if(validarEmailContrasena == true){
+                if(!usuarios.isEmpty()){
                     Toast.makeText(getApplicationContext(),"Usuario Correcto", Toast.LENGTH_SHORT).show();
 
                     Intent i = new Intent(LoginActivity.this, ListadoNotasActivity.class);
+                    i.putExtra("user_id", usuarios.stream().findFirst().get().getId());
                     startActivity(i);
-                }
-                else{
+                } else{
                     Toast.makeText(getApplicationContext(),"Email o Contraseña NO Valido",Toast.LENGTH_SHORT).show();
                 }
             }

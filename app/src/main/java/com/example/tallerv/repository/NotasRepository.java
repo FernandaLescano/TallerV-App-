@@ -4,77 +4,83 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 
 import com.example.tallerv.Entidades.Nota;
+import com.example.tallerv.Entidades.Usuario;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
-public class NotasRepository extends BaseHelper {
+public class NotasRepository{
 
     private static final String TABLE_NOTAS = "t_notas";
     Context context;
 
-    public NotasRepository(@Nullable Context context){
-        super(context);
-        this.context = context;
+
+    public Nota save(Nota nota, Context context){
+        nota.setId(new BaseHelper(context).getWritableDatabase().insert( TABLE_NOTAS, null, notaToContentValue(nota)));
+        return nota;
     }
 
-    public long insertarNotas(String tituloNotaTxt, String localizacionNotaTxt, String descripcionNotaTxt, String fechaNotaTxt){
+    @NonNull
+    private ContentValues notaToContentValue(Nota nota) {
+        ContentValues values = new ContentValues();
 
-        long id = 0;
-        try{
-            BaseHelper baseHelper = new BaseHelper(context);
-            SQLiteDatabase db = baseHelper.getWritableDatabase();
-
-            ContentValues values = new ContentValues();
-
-            values.put("tituloNotaTxt",tituloNotaTxt);
-            values.put("localizacionNotaTxt",localizacionNotaTxt);
-            values.put("descripcionNotaTxt",descripcionNotaTxt);
-            values.put("fechaNotaTxt",fechaNotaTxt);
-
-            id = db.insert( TABLE_NOTAS, null, values);
-
-        } catch(Exception ex){
-            ex.toString();
-        }
-        return id;
+        values.put("tituloNotaTxt", nota.getTituloNotaTxt());
+        values.put("localizacionNotaTxt", nota.getLocalizacionNotaTxt());
+        values.put("descripcionNotaTxt", nota.getDescripcionNotaTxt());
+        values.put("fechaNotaTxt", nota.getFechaNotaTxt());
+        return values;
     }
 
-    //----
 
-    public ArrayList<Nota> mostrarNotas(){
-        BaseHelper baseHelper = new BaseHelper(context);
-        SQLiteDatabase db = baseHelper.getWritableDatabase();
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public List<Nota> buscarNotas(Context context, Optional<String> titulo, Optional<Long> id, Optional<Long> userId){
+        StringBuilder query = new StringBuilder("select * from " + TABLE_NOTAS + " where 1=1 ");
+        List<String> parameters = new ArrayList<>();
 
-        ArrayList<Nota> listaNotas = new ArrayList<>();
+        titulo.ifPresent(e->{
+            query.append(" and titulo = ? ");
+            parameters.add(e);
+        });
 
-        Nota crearNotasE = null;
-        Cursor cursorNotas =null;
+        id.ifPresent(i->{
+            query.append(" and id = ? ");
+            parameters.add(i.toString());
+        });
+        userId.ifPresent(i->{
+            query.append(" and user_id = ? ");
+            parameters.add(i.toString());
+        });
 
-        cursorNotas = db.rawQuery("SELECT * FROM " + TABLE_NOTAS, null);
+        return getNotasFromCursor(getDatabase(context).rawQuery(query.toString(), parameters.toArray(new String[parameters.size()])));
+    }
 
-        if(cursorNotas.moveToFirst()){
-
+    private List<Nota> getNotasFromCursor(Cursor cursor) {
+        List<Nota> notas = new ArrayList<>();
+        if(cursor.moveToFirst()){
             do{
-                crearNotasE = new Nota();
-
-                crearNotasE.setId(cursorNotas.getInt(0));
-                crearNotasE.setTituloNotaTxt(cursorNotas.getString(1));
-                crearNotasE.setLocalizacionNotaTxt(cursorNotas.getString(2));
-                crearNotasE.setDescripcionNotaTxt(cursorNotas.getString(3));
-                crearNotasE.setFechaNotaTxt(cursorNotas.getString(4));
-                listaNotas.add(crearNotasE);
-
-            }while(cursorNotas.moveToNext());
-
-
+                notas.add(cursorToNota(cursor));
+            }while(cursor.moveToNext());
         }
-        cursorNotas.close();
-        return listaNotas;
+        return notas;
+    }
+    private Nota cursorToNota(Cursor cursor) {
+        Nota usuario = new Nota();
+        usuario.setTituloNotaTxt(cursor.getString(cursor.getColumnIndexOrThrow("titulo")));
+        //TODO: completar
+        return usuario;
     }
     //---
+    private static SQLiteDatabase getDatabase(Context context) {
+        return new BaseHelper(context).getWritableDatabase();
+    }
 
 }

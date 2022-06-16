@@ -2,17 +2,16 @@ package com.example.tallerv.Entidades;
 
 public class Usuario {
 
-    private int id;
+    private long id;
     private String usuario;
     private String email;
     private String contrasena;
-    private String repcontrasena;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -40,11 +39,4 @@ public class Usuario {
         this.contrasena = contrasena;
     }
 
-    public String getRepcontrasena() {
-        return repcontrasena;
-    }
-
-    public void setRepcontrasena(String repcontrasena) {
-        this.repcontrasena = repcontrasena;
-    }
 }

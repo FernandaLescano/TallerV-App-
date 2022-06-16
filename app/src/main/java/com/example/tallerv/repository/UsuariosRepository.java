@@ -4,77 +4,80 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+
+import com.example.tallerv.Entidades.Usuario;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Optional;
 
-public class UsuariosRepository extends BaseHelper {
+public class UsuariosRepository {
 
     private static final String TABLE_USUARIOS = "t_usuarios";
-    private static Context context;
 
-
-    public UsuariosRepository(@Nullable Context context){
-        super(context);
-        this.context = context;
+    public Usuario save(Usuario usuario, Context context){
+        usuario.setId(getDatabase(context).insert( TABLE_USUARIOS, null, userToContentValues(usuario)));
+        return usuario;
     }
 
-        public static long insertarUsuario(String usuario, String email, String contrasena, String repcontrasena){
-
-        long id = 0;
-        try{
-            BaseHelper baseHelper = new BaseHelper(context);
-            SQLiteDatabase db = baseHelper.getWritableDatabase();
-
-            ContentValues values = new ContentValues();
-
-            values.put("usuario",usuario);
-            values.put("email",email);
-            values.put("contrasena",contrasena);
-            values.put("repcontrasena",repcontrasena);
-
-            id = db.insert( TABLE_USUARIOS, null, values);
-
-        } catch(Exception ex){
-                ex.toString();
-        }
-        return id;
+    private static SQLiteDatabase getDatabase(Context context) {
+        return new BaseHelper(context).getWritableDatabase();
     }
 
-    public boolean validarEmailContra(String email, String contrasena){
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(" Select * from " + TABLE_USUARIOS + " where email=? and contrasena=? ", new String[]{email,contrasena});
-        return cursor.getCount()>0;
+    @NonNull
+    private static ContentValues userToContentValues(Usuario usuario) {
+        ContentValues values = new ContentValues();
+        values.put("usuario", usuario.getUsuario());
+        values.put("email", usuario.getEmail());
+        values.put("contrasena", usuario.getContrasena());
+        return values;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    public Collection<Usuario> buscarUsuario(Context context, Optional<String> email, Optional<String> contrasena, Optional<Long> id){
+        StringBuilder query = new StringBuilder("select * from " + TABLE_USUARIOS + " where 1=1 ");
+        List<String> parameters = new ArrayList<>();
 
+        email.ifPresent(e->{
+            query.append(" and email = ? ");
+            parameters.add(e);
+        });
 
-    public boolean validarEmail(String emailReg){
-        SQLiteDatabase db =this.getReadableDatabase();
-        Cursor cursor = db.rawQuery(" Select * from " + TABLE_USUARIOS +" where email=? ", new String[]{emailReg});
-        if(cursor.getCount()>0)
-            return true;
-        else
-            return false;
+        contrasena.ifPresent(c->{
+            query.append(" and contrasena = ? ");
+            parameters.add(c);
+        });
+
+        id.ifPresent(i->{
+            query.append(" and id = ?");
+            parameters.add(i.toString());
+        });
+
+        return getUsersFromCursor(getDatabase(context).rawQuery(query.toString(), parameters.toArray(new String[parameters.size()])));
     }
 
-    //--
-
-    public ArrayList<String> Listado(String email){
-
-        ArrayList<String> datos = new ArrayList<String>();
-
-        SQLiteDatabase db = this.getReadableDatabase();
-        //String sql = "select id from "+ TABLE_USUARIOS +" where email=? ", new String[]{email};
-        Cursor c = db.rawQuery("select id from "+ TABLE_USUARIOS +" where email=? ", new String[]{email});
-        if(c.moveToFirst()){
+    private Collection<Usuario> getUsersFromCursor(Cursor cursor) {
+        Collection<Usuario> usuarios = new ArrayList<>();
+        if(cursor.moveToFirst()){
             do{
-                String linea = c.getInt(0)+"";
-                datos.add(linea);
-            }while(c.moveToNext());
+                usuarios.add(cursorToUser(cursor));
+            }while(cursor.moveToNext());
         }
-        db.close();
-        return datos;
+        return usuarios;
+    }
+
+    private Usuario cursorToUser(Cursor cursor) {
+        Usuario usuario = new Usuario();
+        usuario.setUsuario(cursor.getString(cursor.getColumnIndexOrThrow("usuario")));
+        usuario.setEmail(cursor.getString(cursor.getColumnIndexOrThrow("email")));
+        usuario.setContrasena(cursor.getString(cursor.getColumnIndexOrThrow("contrasena")));
+        usuario.setId(cursor.getLong(cursor.getColumnIndexOrThrow("id")));
+        return usuario;
     }
 }

@@ -12,12 +12,13 @@ import com.example.tallerv.Entidades.Nota;
 import com.example.tallerv.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.NotaViewHolder> {
 
-    ArrayList<Nota> listadoNotas;
+    List<Nota> listadoNotas;
 
-    public ListaNotasAdapter(ArrayList<Nota> listadoNotas){
+    public ListaNotasAdapter(List<Nota> listadoNotas){
 
         this.listadoNotas = listadoNotas;
     }

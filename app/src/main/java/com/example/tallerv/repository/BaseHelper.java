@@ -34,7 +34,7 @@ public class BaseHelper extends SQLiteOpenHelper {
                 "localizacionNotaTxt TEXT NOT NULL," +
                 "descripcionNotaTxt TEXT NOT NULL,"+
                 "fechaNotaTxt TEXT NOT NULL,"+
-                "FOREIGN KEY (id) REFERENCES TABLE_USUARIOS(id)  "+")"
+                "user_id INTEGER NOT NULL"+")"
         );
 
     }

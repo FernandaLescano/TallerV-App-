@@ -14,24 +14,34 @@ import android.widget.Toast;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tallerv.Entidades.Nota;
+import com.example.tallerv.Entidades.Usuario;
 import com.example.tallerv.R;
 import com.example.tallerv.repository.NotasRepository;
+import com.example.tallerv.repository.UsuariosRepository;
 
 import java.util.Calendar;
+import java.util.Optional;
 
 public class NuevaNotaActivity extends AppCompatActivity {
 
     Button agregarNota;
     static EditText tituloNotaTxt, localizacionNotaTxt, descripcionNotaTxt;
     static EditText fechaNotaTxt;
-
+    UsuariosRepository usuariosRepository = new UsuariosRepository();
+    NotasRepository notasRepository = new NotasRepository();
     Calendar c;
     DatePickerDialog dpd;
+    private Usuario userLogged;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_notas);
+        userLogged = usuariosRepository.buscarUsuario(NuevaNotaActivity.this,
+                Optional.empty(), Optional.empty(),
+                Optional.of(getIntent().getLongExtra("user_id", 0))).stream().findFirst().get();
 
         tituloNotaTxt = findViewById(R.id.tituloNotaTxt);
         localizacionNotaTxt = findViewById(R.id.localizacionNotaTxt);
@@ -43,10 +53,8 @@ public class NuevaNotaActivity extends AppCompatActivity {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View v) {
-                NotasRepository baseNotas = new NotasRepository(NuevaNotaActivity.this);
-
                 if(!tituloNotaTxt.getText().toString().isEmpty() && !localizacionNotaTxt.getText().toString().isEmpty() && !descripcionNotaTxt.getText().toString().isEmpty() ){
-                long id = baseNotas.insertarNotas(tituloNotaTxt.getText().toString(), localizacionNotaTxt.getText().toString(), descripcionNotaTxt.getText().toString(), fechaNotaTxt.getText().toString());
+                    notasRepository.save(getNota(), NuevaNotaActivity.this);
                     Toast.makeText(NuevaNotaActivity.this, "Nota guardada", Toast.LENGTH_SHORT).show();
                     Intent i = new Intent(NuevaNotaActivity.this, NotaCreadaActivity.class);
                     startActivity(i);
@@ -54,7 +62,6 @@ public class NuevaNotaActivity extends AppCompatActivity {
                 else{
                     Toast.makeText(NuevaNotaActivity.this,"No se guardo la nota", Toast.LENGTH_SHORT).show();
                 }
-
                     }
                 });
 
@@ -92,6 +99,15 @@ public class NuevaNotaActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowHomeEnabled(true);
         }
+    }
+
+    private Nota getNota() {
+        Nota nota = new Nota();
+        //tituloNotaTxt.getText().toString(), localizacionNotaTxt.getText().toString(), descripcionNotaTxt.getText().toString(), fechaNotaTxt.getText().toString()
+        //TODO: llenar nota
+        nota.setUser_id(userLogged.getId());
+        nota.setDescripcionNotaTxt(descripcionNotaTxt.getText().toString());
+        return  nota;
     }
 
 
