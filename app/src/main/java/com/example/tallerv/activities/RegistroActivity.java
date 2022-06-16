@@ -77,7 +77,7 @@ public class RegistroActivity extends AppCompatActivity {
     private void registrarUsuario() {
         String emailReg = email.getText().toString();
         if(isFormComplete()) {
-            if (!repository.buscarUsuario(RegistroActivity.this, Optional.of(emailReg), Optional.empty(), Optional.empty()).isEmpty()) {
+            if (repository.buscarUsuario(RegistroActivity.this, Optional.of(emailReg), Optional.empty(), Optional.empty()).isEmpty()) {
                 guardarUsuario();
             } else {
                 Toast.makeText(RegistroActivity.this, "El email ya existe", Toast.LENGTH_SHORT).show();
@@ -106,10 +106,10 @@ public class RegistroActivity extends AppCompatActivity {
             Toast.makeText(RegistroActivity.this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
             return false;
         }
-        boolean complete = usuario.getText().toString().isEmpty()
-                || email.getText().toString().isEmpty()
-                || contrasena.getText().toString().isEmpty()
-                || repcontrasena.getText().toString().isEmpty();
+        boolean complete = !usuario.getText().toString().isEmpty()
+                || !email.getText().toString().isEmpty()
+                || !contrasena.getText().toString().isEmpty()
+                || !repcontrasena.getText().toString().isEmpty();
 
         if(!complete){
             Toast.makeText(RegistroActivity.this,"Error, falta completar campos", Toast.LENGTH_SHORT).show();

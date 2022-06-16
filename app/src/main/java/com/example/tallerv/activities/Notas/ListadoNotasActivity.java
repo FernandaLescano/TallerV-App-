@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.tallerv.Entidades.Usuario;
 import com.example.tallerv.R;
+import com.example.tallerv.activities.RegistroActivity;
 import com.example.tallerv.adaptadores.ListaNotasAdapter;
 import com.example.tallerv.repository.NotasRepository;
 import com.example.tallerv.repository.UsuariosRepository;
@@ -54,7 +55,9 @@ public class ListadoNotasActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ListadoNotasActivity.this, NuevaNotaActivity.class));
+                Intent i = new Intent(ListadoNotasActivity.this, NuevaNotaActivity.class);
+                i.putExtra("user_id", userLogged.getId());
+                startActivity(i);
             }
         });
 
