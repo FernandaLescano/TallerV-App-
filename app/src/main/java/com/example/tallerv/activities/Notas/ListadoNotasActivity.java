@@ -38,7 +38,6 @@ public class ListadoNotasActivity extends AppCompatActivity {
         userLogged = userRepository.buscarUsuario(ListadoNotasActivity.this,
                 Optional.empty(), Optional.empty(),
                 Optional.of(getIntent().getLongExtra("user_id", 0))).stream().findFirst().get();
-        //--
 
         listadoNotas = findViewById(R.id.listadoNotas);
         listadoNotas.setLayoutManager(new LinearLayoutManager(this));
@@ -49,7 +48,6 @@ public class ListadoNotasActivity extends AppCompatActivity {
                 Optional.of(userLogged.getId())));
 
         listadoNotas.setAdapter(adapter);
-        //--
 
         FloatingActionButton fab = findViewById(R.id.floatingActionButton);
         fab.setOnClickListener(new View.OnClickListener() {

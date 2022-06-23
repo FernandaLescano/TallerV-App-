@@ -104,9 +104,13 @@ public class NuevaNotaActivity extends AppCompatActivity {
     private Nota getNota() {
         Nota nota = new Nota();
         //tituloNotaTxt.getText().toString(), localizacionNotaTxt.getText().toString(), descripcionNotaTxt.getText().toString(), fechaNotaTxt.getText().toString()
-        //TODO: llenar nota
+
+        //nota.setUser_id(userLogged.getId());
         nota.setUser_id(userLogged.getId());
+        nota.setTituloNotaTxt(tituloNotaTxt.getText().toString());
+        nota.setLocalizacionNotaTxt(localizacionNotaTxt.getText().toString());
         nota.setDescripcionNotaTxt(descripcionNotaTxt.getText().toString());
+        nota.setFechaNotaTxt(fechaNotaTxt.getText().toString());
         return  nota;
     }
 

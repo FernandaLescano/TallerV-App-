@@ -40,8 +40,6 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
         holder.viewDescripcionNota.setText(listadoNotas.get(position).getDescripcionNotaTxt());
         holder.viewFechaNota.setText(listadoNotas.get(position).getFechaNotaTxt());
 
-
-
     }
 
     @Override
@@ -68,9 +66,7 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
             viewFechaNota = itemView.findViewById(R.id.viewFechaNota);
 
 
-            //MODIFICAR TODO:
-
-
+            //MODIFICAR
           /*  itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -82,7 +78,6 @@ public class ListaNotasAdapter extends RecyclerView.Adapter<ListaNotasAdapter.No
                     context.startActivity(intent);
                 }
             }); */
-
         }
     }
 }

@@ -8,11 +8,10 @@ import androidx.annotation.Nullable;
 
 public class BaseHelper extends SQLiteOpenHelper {
 
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NOMBRE = "tallerV.db";
     private static final String TABLE_USUARIOS = "t_usuarios";
     private static final String TABLE_NOTAS = "t_notas";
-
 
     public BaseHelper(@Nullable Context context) {
         super(context, DATABASE_NOMBRE, null, DATABASE_VERSION);
@@ -24,7 +23,7 @@ public class BaseHelper extends SQLiteOpenHelper {
                 "id INTEGER PRIMARY KEY AUTOINCREMENT,"+
                 "usuario TEXT NOT NULL,"+
                 "email TEXT NOT NULL," +
-                "contrasena TEXT NOT NULL)"
+                "contrasena TEXT NOT NULL "+")"
         );
 
         db.execSQL(" CREATE TABLE " + TABLE_NOTAS+ "(" +
@@ -33,7 +32,7 @@ public class BaseHelper extends SQLiteOpenHelper {
                 "localizacionNotaTxt TEXT NOT NULL," +
                 "descripcionNotaTxt TEXT NOT NULL,"+
                 "fechaNotaTxt TEXT NOT NULL,"+
-                "user_id INTEGER NOT NULL"+")"
+                "user_id INTEGER NOT NULL "+")"
         );
 
     }
@@ -43,6 +42,4 @@ public class BaseHelper extends SQLiteOpenHelper {
             db.execSQL(" DROP TABLE " + TABLE_NOTAS);
             onCreate(db);
         }
-
-    //--
 }
